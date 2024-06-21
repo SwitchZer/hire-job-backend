@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { response } = require("../helper/common");
+const cloudinary = require("../utils/cloudinary");
+const setClient = require("../configs/redis");
 const {
   readWorkers,
   registerWorkers,
@@ -9,6 +11,7 @@ const {
   readoneWorkers,
   dropUsers,
   countWorkers,
+  updatePhoto,
 } = require("../models/workers");
 const { findByemail } = require("../models/auth");
 const newError = require("http-errors");
@@ -18,7 +21,7 @@ const getWorkers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page || 1);
     const limit = parseInt(req.query.limit || 3);
-    const sort = req.query.sort || "name"
+    const sort = req.query.sort || "name";
     const sortBy = req.query.sortBy || "ASC";
     const search = req.query.search || "";
     const offset = (page - 1) * limit;
@@ -146,7 +149,12 @@ const getidWorkers = async (req, res, next) => {
     if (!worker) {
       return next(new newError.NotFound("User Not Found"));
     }
-    response(res, worker, 200, "Get Data Id Success!");
+    const client = await setClient();
+    await client.setEx(`worker/${id}`, 60 * 60, JSON.stringify(worker));
+    res.json({
+      status: "success",
+      data: worker,
+    });
   } catch (error) {
     console.log(error);
     next(new newError.InternalServerError());
@@ -168,6 +176,30 @@ const deleteWorkers = async (req, res, next) => {
 };
 // Delete Workers and Users
 
+// Update Photo Workers
+const updateFoto = async (req, res, next) => {
+  try {
+    const email = req.decoded.email;
+    const {
+      rows: [user],
+    } = await findByemail(email);
+
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const urlPhoto = result.secure_url;
+    await updatePhoto(urlPhoto, user.user_id);
+    response(
+      res,
+      { photo: urlPhoto },
+      200,
+      "update photo profile workers success "
+    );
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+// Update Photo Workers
+
 module.exports = {
   putWorkers,
   postWorkers,
@@ -175,4 +207,5 @@ module.exports = {
   getWorkers,
   getidWorkers,
   profileWorkers,
+  updateFoto,
 };

@@ -26,6 +26,13 @@ const login = async (req, res, next) => {
     };
     const token = generateToken(payload);
     const refreshToken = generateRefreshToken(payload);
+    res.cookie("token", user.token, {
+      httpOnly: true,
+      maxAge: 60 * 1000 * 60 * 12,
+      secure: false,
+      path: "/",
+      sameSite: "Lax",
+    });
     response(res, { ...user, token, refreshToken }, 200, "anda berhasil login");
   } catch (error) {
     console.log(error);
@@ -49,7 +56,24 @@ const refreshToken = (req, res, next) => {
   response(res, data, 200, "Refresh Token Success");
 };
 
+const logout = async (req, res, next) => {
+  res.clearCookie("token");
+  response(res, null, 200, "Logout Success");
+};
+
+const checkRole = (req, res, next) => {
+  try {
+    const { iat, exp, ...data } = req.decoded;
+    response(res, { data }, 200, "check role success");
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   login,
   refreshToken,
+  logout,
+  checkRole,
 };

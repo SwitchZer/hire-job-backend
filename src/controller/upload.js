@@ -1,18 +1,17 @@
-const { response } = require("../helper/common");
-const newError = require("http-errors");
-
-const uploadSingle = (req, res, next) => {
-  // const namaFile = req.body.file_name
+const cloudinary = require("../utils/cloudinary");
+const { response } = require("../helpers/common");
+const uploadSingle = async (req, res, next) => {
   try {
-    const data = {
-      file: `http://localhost:4000/file/` + req.file.filename,
-      // setingName: namaFile
-    };
-
-    response(res, data, 201, "upload file success");
+    const result = await cloudinary.uploader.upload(req.file.path);
+    response(
+      res,
+      { file_url: result.secure_url },
+      201,
+      "file berhasil diupload"
+    );
   } catch (error) {
     console.log(error);
-    next(new newError.InternalServerError());
+    next(error);
   }
 };
 

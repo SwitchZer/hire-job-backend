@@ -57,6 +57,13 @@ const countWorkers = () => {
   return pool.query("SELECT COUNT(*) AS total FROM workers");
 };
 
+const updatePhoto = (urlPhoto, id) => {
+  return pool.query("UPDATE workers SET photo = $1 WHERE user_id = $2", [
+    urlPhoto,
+    id,
+  ]);
+};
+
 module.exports = {
   readWorkers,
   registerWorkers,
@@ -66,4 +73,5 @@ module.exports = {
   updateWorkers,
   readoneWorkers,
   countWorkers,
+  updatePhoto,
 };
