@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { response } = require("../helper/common");
 const cloudinary = require("../utils/cloudinary");
-const setClient = require("../configs/redis");
 const {
   readWorkers,
   registerWorkers,
@@ -149,12 +148,7 @@ const getidWorkers = async (req, res, next) => {
     if (!worker) {
       return next(new newError.NotFound("User Not Found"));
     }
-    const client = await setClient();
-    await client.setEx(`worker/${id}`, 60 * 60, JSON.stringify(worker));
-    res.json({
-      status: "success",
-      data: worker,
-    });
+    response(res, worker, 200, "Get Data Id Success!");
   } catch (error) {
     console.log(error);
     next(new newError.InternalServerError());
