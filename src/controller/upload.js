@@ -1,5 +1,5 @@
 const cloudinary = require("../utils/cloudinary");
-const { response } = require("../helpers/common");
+const { response } = require("../helper/common");
 const uploadSingle = async (req, res, next) => {
   try {
     const result = await cloudinary.uploader.upload(req.file.path);
