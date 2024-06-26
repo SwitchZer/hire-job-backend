@@ -73,7 +73,7 @@ const profileWorkers = async (req, res, next) => {
 
 // Post Workers and Users
 const bcrypt = require("bcrypt");
-const setClient = require("../configs/redis");
+// const setClient = require("../configs/redis");
 const saltRounds = 10;
 
 const postWorkers = async (req, res, next) => {
