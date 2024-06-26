@@ -149,12 +149,12 @@ const getidWorkers = async (req, res, next) => {
     if (!worker) {
       return next(new newError.NotFound("User Not Found"));
     }
-    const client = await setClient();
-    await client.setEx(`workers/${id}`, 60 * 60, JSON.stringify(worker));
-    res.json({
-      status: "success",
-      data: worker,
-    });
+    // const client = await setClient();
+    // await client.setEx(`/workers/${id}`, 60 * 60, JSON.stringify(worker));
+    // res.json({
+    //   status: "success",
+    //   data: worker,
+    // });
     response(res, worker, 200, "Get Data Id Success!");
   } catch (error) {
     console.log(error);

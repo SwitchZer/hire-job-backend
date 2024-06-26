@@ -1,30 +1,46 @@
 const setClient = require("../configs/redis");
 const { response } = require("../helper/common");
+const { findByemail } = require("../models/auth");
 
-const hitCacheProductDetail = async (req, res, next) => {
+const hitCacheProfileId = async (req, res, next) => {
   const client = await setClient();
-  const idUsers = req.params.id;
-  const product = await client.get(`workers/${idUsers}`);
-  console.log(product);
-  if (product) {
+
+  const email = req.decoded.email;
+  const {
+    rows: [worker],
+  } = await findByemail(email);
+  const id = worker.id;
+  console.log(id);
+
+  const experience = await client.get(`worker/${id}`);
+
+  if (experience) {
     return response(
       res,
-      JSON.parse(product),
+      JSON.parse(experience),
       200,
-      "get workers success from redis"
+      `get worker (${id}) experience success from redis`
     );
   }
+
   next();
 };
 
-const clearCacheProductDetail = async (req, res, next) => {
+const clearCacheProfileId = async (req, res, next) => {
   const client = await setClient();
-  const idUsers = req.params.id;
-  await client.del(`workers/${idUsers}`);
+
+  const email = req.decoded.email;
+  const {
+    rows: [worker],
+  } = await findByemail(email);
+  const id = worker.id;
+  console.log(id);
+
+  await client.del(`worker/${id}`);
   next();
 };
 
 module.exports = {
-  hitCacheProductDetail,
-  clearCacheProductDetail,
+  hitCacheProfileId,
+  clearCacheProfileId,
 };
