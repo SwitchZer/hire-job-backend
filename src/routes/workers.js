@@ -8,10 +8,10 @@ const {
   profileWorkers,
 } = require("../controller/workers");
 const { protect, checkRole } = require("../middlewares/auth");
-const {
-  // hitCacheProfileId,
-  // clearCacheProfileId,
-} = require("../middlewares/redis");
+// const {
+//   hitCacheProfileId,
+//   clearCacheProfileId,
+// } = require("../middlewares/redis");
 const route = express.Router();
 
 // route
