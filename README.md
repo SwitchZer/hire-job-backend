@@ -3,14 +3,6 @@
 
 Peworld is a leading platform for finding and connecting the best talents with quality companies. We are committed to shaping the future in the Fourth Industrial Revolution by providing access to the finest talent network and an efficient recruitment experience.
 
-
-## Acknowledgements
-
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
-
-
 ## Documentation
 
 [Documentation](https://documenter.getpostman.com/view/13368987/2sA3dskYxF)
