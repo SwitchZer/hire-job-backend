@@ -19,7 +19,7 @@ route
   .delete("/:id", protect, deleteWorkers)
   .get("/:id", getidWorkers)
   .put("/profile", protect, putWorkers)
-  .get("/profile", protect, profileWorkers)
+  .get("/profile/self", protect, profileWorkers)
   .put("/profile/photo", protect, upload.single("photo"), updateProfileWorker);
 
 module.exports = route;
