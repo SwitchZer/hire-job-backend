@@ -61,9 +61,9 @@ const checkRole = (roleName) => {
   return (req, res, next) => {
     const role = req.decoded.role;
     if (role !== roleName) {
-      return next(createHttpError(403, `${roleName} only!!`));
+      next(createHttpError(403, `${roleName} only!!`));
+      return;
     }
-
     next();
   };
 };
