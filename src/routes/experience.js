@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect, checkRole } = require("../middlewares/auth");
+const { protect } = require("../middlewares/auth");
 const {
   addExperience,
   getProfileExperience,
@@ -10,10 +10,10 @@ const {
 
 const route = express.Router();
 
-route.post("/", protect, checkRole("worker"), addExperience);
-route.get("/", checkRole("worker"), protect, getProfileExperience);
-route.delete("/:id", protect, checkRole("worker"), deleteExperience);
+route.post("/", protect, addExperience);
+route.get("/", protect, getProfileExperience);
+route.delete("/:id", protect, deleteExperience);
 route.get("/:id", protect, getExperienceIdWorkers);
-route.put("/:id", protect, checkRole("worker"), putExperience);
+route.put("/:id", protect, putExperience);
 
 module.exports = route;

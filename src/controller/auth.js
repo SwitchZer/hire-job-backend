@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { response } = require("../helper/common");
 const { generateToken, generateRefreshToken } = require("../helper/auth");
 const { findByemail } = require("../models/auth");
+const createHttpError = require("http-errors");
 
 const login = async (req, res, next) => {
   try {
@@ -49,7 +50,19 @@ const refreshToken = (req, res, next) => {
   response(res, data, 200, "Refresh Token Success");
 };
 
+const checkRole = (roleName) => {
+  return (req, res, next) => {
+    const role = req.decoded.role;
+    if (role !== roleName) {
+      return next(createHttpError(403, `${roleName} only!!`));
+    }
+
+    next();
+  };
+};
+
 module.exports = {
   login,
   refreshToken,
+  checkRole,
 };

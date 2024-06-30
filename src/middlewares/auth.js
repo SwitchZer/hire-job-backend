@@ -25,17 +25,6 @@ const protect = (req, res, next) => {
   }
 };
 
-const checkRole = (roleName) => {
-  return (req, res, next) => {
-    const role = req.decoded.role;
-    if (role !== roleName) {
-      next(createHttpError(403, `${roleName} only!!`));
-      return;
-    }
-    next();
-  };
-};
 module.exports = {
   protect,
-  checkRole,
 };

@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect, checkRole } = require("../middlewares/auth");
+const { protect } = require("../middlewares/auth");
 const {
   addPortofolio,
   getProfilePortofolio,
@@ -10,10 +10,10 @@ const {
 
 const route = express.Router();
 
-route.post("/", protect, checkRole("worker"), addPortofolio);
-route.get("/", protect, checkRole("worker"), getProfilePortofolio);
-route.delete("/:id", protect, checkRole("worker"), deletePortofolio);
+route.post("/", protect, addPortofolio);
+route.get("/", protect, getProfilePortofolio);
+route.delete("/:id", protect, deletePortofolio);
 route.get("/:id", protect, getPortofolioIdWorkers);
-route.put("/:id", protect, checkRole("worker"), putPortofolio);
+route.put("/:id", protect, putPortofolio);
 
 module.exports = route;
