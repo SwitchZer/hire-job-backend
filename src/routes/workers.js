@@ -7,6 +7,7 @@ const {
   getidWorkers,
   profileWorkers,
   updateProfileWorker,
+  putWorkers,
 } = require("../controller/workers");
 const { protect } = require("../middlewares/auth");
 const route = express.Router();
