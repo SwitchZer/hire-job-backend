@@ -1,9 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 const { response } = require("../helper/common");
+const cloudinary = require("../configs/cloudinary");
 const {
   registerRecruiters,
   registerUsers,
   updateRecruiters,
+  updatePhotoRecruiter,
 } = require("../models/recruiters");
 const { findByemail } = require("../models/auth");
 const newError = require("http-errors");
@@ -106,8 +108,33 @@ const putRecruiters = async (req, res, next) => {
 };
 // Update Recruiters and Users
 
+// Update Photo Profile Recruiter
+const updateProfileRecruiter = async (req, res, next) => {
+  try {
+    const email = req.decoded.email;
+    const {
+      rows: [user],
+    } = await findByemail(email);
+
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const urlPhoto = result.secure_url;
+    await updatePhotoRecruiter(urlPhoto, user.user_id);
+    response(
+      res,
+      { photo: urlPhoto },
+      200,
+      "update photo profile Recruiters success "
+    );
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+// Update Photo Profile Recruiter
+
 module.exports = {
   putRecruiters,
   postRecruiters,
   profileRecruiters,
+  updateProfileRecruiter,
 };

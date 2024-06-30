@@ -37,7 +37,7 @@ const updateWorkers = (dataWorkers, email) => {
 
 const readoneWorkers = (id) => {
   return pool.query(
-    "SELECT workers.id, workers.user_id, workers.name, workers.phone, workers.job_desk, workers.domicile, workers.workplace, workers.description, workers.created_at, workers.updated_at FROM workers JOIN users ON workers.user_id = users.user_id WHERE id = $1",
+    "SELECT users.email,  workers.* FROM workers JOIN users ON workers.user_id = users.user_id WHERE workers.id = $1",
     [id]
   );
 };
@@ -57,7 +57,7 @@ const countWorkers = () => {
   return pool.query("SELECT COUNT(*) AS total FROM workers");
 };
 
-const updatePhoto = (urlPhoto, id) => {
+const updatePhotoWorker = (urlPhoto, id) => {
   return pool.query("UPDATE workers SET photo = $1 WHERE user_id = $2", [
     urlPhoto,
     id,
@@ -73,5 +73,5 @@ module.exports = {
   updateWorkers,
   readoneWorkers,
   countWorkers,
-  updatePhoto,
+  updatePhotoWorker,
 };

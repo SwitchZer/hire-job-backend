@@ -6,34 +6,19 @@ const {
   deleteWorkers,
   getidWorkers,
   profileWorkers,
+  updateProfileWorker,
 } = require("../controller/workers");
-const { protect, checkRole } = require("../middlewares/auth");
-// const {
-//   hitCacheProfileId,
-//   clearCacheProfileId,
-// } = require("../middlewares/redis");
+const { protect } = require("../middlewares/auth");
 const route = express.Router();
-
-// route
-//   .get("/", protect, getWorkers)
-//   .post("/register", clearCacheProfileId, postWorkers)
-//   // .put("/users/:id", checkRole("worker"), protect, putWorkers)
-//   .delete("/:id", protect, deleteWorkers, clearCacheProfileId)
-//   .get("/:id", protect, getidWorkers, hitCacheProfileId)
-//   .get(
-//     "/profile",
-//     protect,
-//     checkRole("worker"),
-//     hitCacheProfileId,
-//     profileWorkers
-//   );
+const upload = require("../middlewares/upload");
 
 route
-  .get("/", protect, getWorkers)
   .post("/register", postWorkers)
-  // .put("/users/:id", checkRole("worker"), protect, putWorkers)
+  .get("/", protect, getWorkers)
   .delete("/:id", protect, deleteWorkers)
-  .get("/:id", protect, getidWorkers)
-  .get("/profile", protect, checkRole("worker"), profileWorkers);
+  .get("/:id", getidWorkers)
+  .put("/profile", protect, putWorkers)
+  .get("/profile", protect, profileWorkers)
+  .put("/profile/photo", protect, upload.single("photo"), updateProfileWorker);
 
 module.exports = route;

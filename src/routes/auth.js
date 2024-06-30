@@ -6,7 +6,6 @@ const route = express.Router();
 route
   .post("/login", authController.login)
   .post("/refresh-token", authController.refreshToken)
-  .get("/logout", authController.logout)
   .get("/check-role", protect, authController.checkRole);
 
 module.exports = route;

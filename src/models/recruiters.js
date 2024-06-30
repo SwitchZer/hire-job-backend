@@ -42,9 +42,17 @@ const countRecruiters = () => {
   return pool.query("SELECT COUNT(*) AS total FROM recruiters");
 };
 
+const updatePhotoRecruiter = (urlPhoto, id) => {
+  return pool.query("UPDATE recruiters SET photo = $1 WHERE user_id = $2", [
+    urlPhoto,
+    id,
+  ]);
+};
+
 module.exports = {
   registerRecruiters,
   registerUsers,
   updateRecruiters,
   countRecruiters,
+  updatePhotoRecruiter,
 };

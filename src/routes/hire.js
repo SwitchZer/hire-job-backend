@@ -1,5 +1,5 @@
 const express = require("express");
-const { protect, checkRole } = require("../middlewares/auth");
+const { protect } = require("../middlewares/auth");
 const {
   addHire,
   getHireRecruiter,
@@ -7,8 +7,8 @@ const {
 } = require("../controller/hire");
 const route = express.Router();
 
-route.post("/", protect, checkRole("recruiter"), addHire);
-route.get("/recruiters", protect, checkRole("recruiter"), getHireRecruiter);
-route.get("/workers", protect, checkRole("worker"), getHireWorkers);
+route.post("/", protect, addHire);
+route.get("/recruiters", protect, getHireRecruiter);
+route.get("/workers", protect, getHireWorkers);
 
 module.exports = route;

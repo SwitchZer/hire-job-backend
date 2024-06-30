@@ -3,13 +3,21 @@ const {
   postRecruiters,
   putRecruiters,
   profileRecruiters,
+  updateProfileRecruiter,
 } = require("../controller/recruiters");
-const { protect, checkRole } = require("../middlewares/auth");
+const { protect } = require("../middlewares/auth");
 const route = express.Router();
+const upload = require("../middlewares/upload");
 
 route
   .post("/register", postRecruiters)
-  .put("/profile", checkRole("recruiter"), protect, putRecruiters)
-  .get("/profile", checkRole("recruiter"), protect, profileRecruiters);
+  .put("/profile", protect, putRecruiters)
+  .get("/profile", protect, profileRecruiters)
+  .put(
+    "/profile/photo",
+    protect,
+    upload.single("photo"),
+    updateProfileRecruiter
+  );
 
 module.exports = route;

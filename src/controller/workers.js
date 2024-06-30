@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { response } = require("../helper/common");
-const cloudinary = require("../utils/cloudinary");
+const cloudinary = require("../configs/cloudinary");
 const {
   readWorkers,
   registerWorkers,
@@ -10,7 +10,7 @@ const {
   readoneWorkers,
   dropUsers,
   countWorkers,
-  updatePhoto,
+  updatePhotoWorker,
 } = require("../models/workers");
 const { findByemail } = require("../models/auth");
 const newError = require("http-errors");
@@ -19,9 +19,9 @@ const newError = require("http-errors");
 const getWorkers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page || 1);
-    const limit = parseInt(req.query.limit || 10);
-    const sort = req.query.sort || "name";
-    const sortBy = req.query.sortBy || "ASC";
+    const limit = parseInt(req.query.limit || 3);
+    const sort = req.query.sort || "created_at";
+    const sortBy = req.query.sortBy || "DESC";
     const search = req.query.search || "";
     const offset = (page - 1) * limit;
     const { rows } = await readWorkers({
@@ -57,7 +57,6 @@ const getWorkers = async (req, res, next) => {
 const profileWorkers = async (req, res, next) => {
   try {
     const email = req.decoded.email;
-
     const {
       rows: [user],
     } = await findByemail(email, { relation: "workers" });
@@ -177,8 +176,8 @@ const deleteWorkers = async (req, res, next) => {
 };
 // Delete Workers and Users
 
-// Update Photo Workers
-const updateFoto = async (req, res, next) => {
+// Update Photo Profile Worker
+const updateProfileWorker = async (req, res, next) => {
   try {
     const email = req.decoded.email;
     const {
@@ -187,7 +186,7 @@ const updateFoto = async (req, res, next) => {
 
     const result = await cloudinary.uploader.upload(req.file.path);
     const urlPhoto = result.secure_url;
-    await updatePhoto(urlPhoto, user.user_id);
+    await updatePhotoWorker(urlPhoto, user.user_id);
     response(
       res,
       { photo: urlPhoto },
@@ -199,7 +198,7 @@ const updateFoto = async (req, res, next) => {
     next(error);
   }
 };
-// Update Photo Workers
+// Update Photo Profile Worker
 
 module.exports = {
   putWorkers,
@@ -208,5 +207,5 @@ module.exports = {
   getWorkers,
   getidWorkers,
   profileWorkers,
-  updateFoto,
+  updateProfileWorker,
 };
