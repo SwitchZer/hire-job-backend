@@ -57,19 +57,18 @@ const refreshToken = (req, res, next) => {
   response(res, data, 200, "Refresh Token Success");
 };
 
-const checkRole = (roleName) => {
-  return (req, res, next) => {
-    const role = req.decoded.role;
-    if (role !== roleName) {
-      next(createHttpError(403, `${roleName} only!!`));
-      return;
-    }
-    next();
-  };
+const checkRoleUser = (req, res, next) => {
+  try {
+    const { iat, exp, ...data } = req.decoded;
+    response(res, { data }, 200, "check role success");
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 
 module.exports = {
   login,
   refreshToken,
-  checkRole,
+  checkRoleUser,
 };
