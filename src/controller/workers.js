@@ -19,7 +19,7 @@ const newError = require("http-errors");
 const getWorkers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page || 1);
-    const limit = parseInt(req.query.limit || 3);
+    const limit = parseInt(req.query.limit || 9);
     const sort = req.query.sort || "created_at";
     const sortBy = req.query.sortBy || "DESC";
     const search = req.query.search || "";
