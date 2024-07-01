@@ -2,10 +2,8 @@ const pool = require("../configs/db");
 
 const readWorkers = ({ limit, offset, search, sort, sortBy }) => {
   return pool.query(
-    `SELECT * FROM workers ${
-      search ? `WHERE name ILIKE '%${search}%'` : ""
-    } ORDER BY ${sort} ${sortBy} LIMIT $1 OFFSET $2`,
-    [limit, offset]
+    "SELECT workers.id, workers.user_id, workers.name, workers.phone, workers.job_desk, workers.domicile, workers.workplace, workers.description, workers.created_at, workers.updated_at FROM workers JOIN users ON workers.user_id = users.user_id WHERE workers.name ILIKE $1 ORDER BY id ASC LIMIT $2 OFFSET $3",
+    [`%${search}%`, limit, offset]
   );
 };
 
