@@ -2,8 +2,10 @@ const pool = require("../configs/db");
 
 const readWorkers = ({ limit, offset, search, sort, sortBy }) => {
   return pool.query(
-    "SELECT workers.id, workers.user_id, workers.name, workers.phone, workers.job_desk, workers.domicile, workers.workplace, workers.description, workers.photo, workers.created_at, workers.updated_at FROM workers JOIN users ON workers.user_id = users.user_id WHERE workers.name ILIKE $1 ORDER BY id DESC LIMIT $2 OFFSET $3",
-    [`%${search}%`, limit, offset]
+    `SELECT * FROM workers ${
+      search ? `WHERE name ILIKE '%${search}%'` : ""
+    } ORDER BY ${sort} ${sortBy} LIMIT $1 OFFSET $2`,
+    [limit, offset]
   );
 };
 
@@ -53,8 +55,23 @@ const dropUsers = (id) => {
   );
 };
 
-const countWorkers = () => {
-  return pool.query("SELECT COUNT(*) AS total FROM workers");
+const countWorkers = (search) => {
+  return pool.query(
+    `SELECT COUNT(*) AS total FROM workers ${
+      search
+        ? `WHERE name ILIKE '%${search}%' OR job_desk ILIKE '%${search}%'`
+        : ""
+    }`
+  );
+};
+
+const SelectSkillWorker = ({ id }) => {
+  // console.log(id);
+  return pool.query({
+    rowMode: "array",
+    text: "SELECT skills.skill_name FROM skills WHERE worker_id = $1",
+    values: [id],
+  });
 };
 
 const updatePhotoWorker = (urlPhoto, id) => {
@@ -74,4 +91,5 @@ module.exports = {
   readoneWorkers,
   countWorkers,
   updatePhotoWorker,
+  SelectSkillWorker,
 };

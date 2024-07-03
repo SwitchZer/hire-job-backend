@@ -11,6 +11,7 @@ const {
   dropUsers,
   countWorkers,
   updatePhotoWorker,
+  SelectSkillWorker,
 } = require("../models/workers");
 const { findByemail } = require("../models/auth");
 const newError = require("http-errors");
@@ -24,6 +25,7 @@ const getWorkers = async (req, res, next) => {
     const sortBy = req.query.sortBy || "DESC";
     const search = req.query.search || "";
     const offset = (page - 1) * limit;
+    let result = [];
     const { rows } = await readWorkers({
       limit,
       offset,
@@ -31,21 +33,31 @@ const getWorkers = async (req, res, next) => {
       sortBy,
       search,
     });
+    for (obj of rows) {
+      const { rows: res } = await SelectSkillWorker({ id: obj.id });
+      const skills = res.map(([item]) => {
+        return item;
+      });
+      result = [
+        ...result,
+        {
+          ...obj,
+          skills: skills,
+        },
+      ];
+    }
     const {
       rows: [count],
-    } = await countWorkers();
-    const totalData = count.total;
+    } = await countWorkers({ search });
+    const totalData = parseInt(count.total);
     const totalPage = Math.ceil(totalData / limit);
-    const searchResults = rows.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
-    );
     const pagination = {
       limit,
       page,
       totalData,
       totalPage,
     };
-    response(res, searchResults, 200, "Get Data Success", pagination);
+    response(res, result, 200, "Get Data result", pagination);
   } catch (error) {
     console.log(error);
     next(new newError.InternalServerError());
