@@ -69,7 +69,7 @@ const SelectSkillWorker = ({ id }) => {
   // console.log(id);
   return pool.query({
     rowMode: "array",
-    text: "SELECT skills.skill_name FROM skills WHERE worker_id = $1",
+    text: "SELECT skills.skill_name FROM skills WHERE workers_id = $1",
     values: [id],
   });
 };
