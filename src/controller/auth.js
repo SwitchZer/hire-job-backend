@@ -27,13 +27,7 @@ const login = async (req, res, next) => {
     };
     const token = generateToken(payload);
     const refreshToken = generateRefreshToken(payload);
-    res.cookie("token", user.token, {
-      httpOnly: true,
-      maxAge: 60 * 1000 * 60 * 12,
-      secure: false,
-      path: "/",
-      sameSite: "Lax",
-    });
+
     response(res, { ...user, token, refreshToken }, 200, "anda berhasil login");
   } catch (error) {
     console.log(error);
