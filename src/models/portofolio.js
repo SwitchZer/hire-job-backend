@@ -21,10 +21,10 @@ const readProfilePortofolio = (email) => {
   );
 };
 
-const readPortofolioIdWorkers = (id) => {
+const readPortofolioIdWorkers = (worker_id) => {
   return pool.query(
-    "SELECT portofolio.portofolio_id, portofolio.application_name, portofolio.link_repository, portofolio.application, portofolio.image, portofolio.created_at, portofolio.updated_at FROM portofolio JOIN workers ON portofolio.workers_id = workers.id JOIN users ON workers.user_id = users.user_id WHERE workers.id = $1",
-    [id]
+    "SELECT id,  application_name, link_repository, application, image, created_at, updated_at FROM portfolio WHERE worker_id = $1",
+    [worker_id]
   );
 };
 

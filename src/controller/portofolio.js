@@ -65,13 +65,10 @@ const deletePortofolio = async (req, res, next) => {
 
 // Get Portofolio by Id Workers
 const getPortofolioIdWorkers = async (req, res, next) => {
-  const id = req.params.id;
   try {
-    const { rows } = await readPortofolioIdWorkers(id);
-    if (rows == 0) {
-      return next(new newError.NotFound("Portofolio Not Found"));
-    }
-    response(res, rows, 200, "Get Data Id Success!");
+    const id = req.params.id;
+    const { rows } = await readPortofolioIdWorkers({ worker_id: id });
+    response(res, rows, 200, "get portfolio success");
   } catch (error) {
     console.log(error);
     next(new newError.InternalServerError());
