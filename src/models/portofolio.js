@@ -23,7 +23,7 @@ const readProfilePortofolio = (email) => {
 
 const readPortofolioIdWorkers = (worker_id) => {
   return pool.query(
-    "SELECT id,  application_name, link_repository, application, image, created_at, updated_at FROM portofolio WHERE worker_id = $1",
+    "SELECT id,  application_name, link_repository, application, image, created_at, updated_at FROM portofolio WHERE workers_id = $1",
     [worker_id]
   );
 };
