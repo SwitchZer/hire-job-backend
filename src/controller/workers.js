@@ -25,6 +25,7 @@ const getWorkers = async (req, res, next) => {
     const sortBy = req.query.sortBy || "DESC";
     const search = req.query.search || "";
     const offset = (page - 1) * limit;
+
     let result = [];
     const { rows } = await readWorkers({
       limit,
@@ -33,6 +34,7 @@ const getWorkers = async (req, res, next) => {
       sortBy,
       search,
     });
+
     for (obj of rows) {
       const { rows: res } = await SelectSkillWorker({ id: obj.id });
       const skills = res.map(([item]) => {
@@ -46,10 +48,9 @@ const getWorkers = async (req, res, next) => {
         },
       ];
     }
-    const {
-      rows: [count],
-    } = await countWorkers({ search });
-    const totalData = parseInt(count.total);
+
+    const { rows: countResult } = await countWorkers(search);
+    const totalData = parseInt(countResult[0].total);
     const totalPage = Math.ceil(totalData / limit);
     const pagination = {
       limit,
@@ -57,6 +58,7 @@ const getWorkers = async (req, res, next) => {
       totalData,
       totalPage,
     };
+
     response(res, result, 200, "Get Data result", pagination);
   } catch (error) {
     console.log(error);
