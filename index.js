@@ -29,6 +29,10 @@ app.use("/experience", experienceRoutes);
 app.use("/portofolio", portofolioRoutes);
 app.use("/hire", hireRoutes);
 
+app.get("/", (req, res, next) => {
+  res.send("Peworld API is Running and Ready to Use");
+});
+
 app.use((error, req, res, next) => {
   console.log(error);
   const messageError = error.message || "Internal Server Error";
