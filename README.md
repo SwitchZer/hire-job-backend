@@ -1,4 +1,3 @@
-
 # Peworld Backend
 
 Peworld is a leading platform for finding and connecting the best talents with quality companies. We are committed to shaping the future in the Fourth Industrial Revolution by providing access to the finest talent network and an efficient recruitment experience.
@@ -6,7 +5,6 @@ Peworld is a leading platform for finding and connecting the best talents with q
 ## Documentation
 
 ⚡[Peworld Backend](https://documenter.getpostman.com/view/13368987/2sA3dskYxF)
-
 
 ## Tech Stack
 
@@ -22,14 +20,12 @@ Peworld is a leading platform for finding and connecting the best talents with q
 
 [![My Skills](https://skillicons.dev/icons?i=js,nodejs,express,postgres,redis,postman,vercel)](https://skillicons.dev)
 
-
 ## Features
 
 - Create user Worker/Recruiter
 - Edit Profile User
 - Worker can Create, Read, Update, Delete Portfolio and Experience
 - Detail Worker, Hire Worker, Add Skill Worker
-
 
 ## Installation
 
@@ -50,7 +46,7 @@ Peworld is a leading platform for finding and connecting the best talents with q
 ```bash
   npm run dev
 ```
-    
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -75,3 +71,22 @@ To run this project, you will need to add the following environment variables to
 
 `SECRET_KEY_JWT`
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+Feel Free to Contact me using [alfredcnzagoto@gmail.com](alfredcnzagoto@gmail.com).
+
+## Contributing
+
+Contributions are always welcome!
+
+## Related Project
+
+Project Related to this Project.
+
+[Peworld Web](https://github.com/SwitchZer/Hire-Job-App)
+
+[Peworld Mobile](https://github.com/SwitchZer/PeWorld-Mobile)
