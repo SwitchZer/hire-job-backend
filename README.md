@@ -29,6 +29,7 @@ Peworld is a leading platform for finding and connecting the best talents with q
 
 ## Project Structure
 
+```
 └── 📁backend
     └── .LICENSE
     └── .env
@@ -80,7 +81,7 @@ Peworld is a leading platform for finding and connecting the best talents with q
             └── cloudinary.js
     └── 📁upload
     └── vercel.json
-
+```
 
 ## Installation
 
