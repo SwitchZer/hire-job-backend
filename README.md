@@ -27,6 +27,61 @@ Peworld is a leading platform for finding and connecting the best talents with q
 - Worker can Create, Read, Update, Delete Portfolio and Experience
 - Detail Worker, Hire Worker, Add Skill Worker
 
+## Project Structure
+
+└── 📁backend
+    └── .LICENSE
+    └── .env
+    └── .gitignore
+    └── eslint.config.mjs
+    └── index.js
+    └── package-lock.json
+    └── package.json
+    └── README.md
+    └── 📁src
+        └── 📁configs
+            └── cloudinary.js
+            └── db.js
+            └── redis.js
+        └── 📁controller
+            └── auth.js
+            └── experience.js
+            └── hire.js
+            └── portofolio.js
+            └── recruiters.js
+            └── skill.js
+            └── upload.js
+            └── workers.js
+        └── 📁helper
+            └── auth.js
+            └── common.js
+        └── 📁middlewares
+            └── auth.js
+            └── redis.js
+            └── upload.js
+        └── 📁models
+            └── auth.js
+            └── experience.js
+            └── hire.js
+            └── portofolio.js
+            └── recruiters.js
+            └── skill.js
+            └── workers.js
+        └── 📁routes
+            └── auth.js
+            └── experience.js
+            └── hire.js
+            └── portfolio.js
+            └── recruiters.js
+            └── skill.js
+            └── workers.js
+            └── upload.js
+        └── 📁utils
+            └── cloudinary.js
+    └── 📁upload
+    └── vercel.json
+
+
 ## Installation
 
 #### Clone this repository :
